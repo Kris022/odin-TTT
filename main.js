@@ -1,5 +1,6 @@
 const gameBoard = (function() {
     // 0=' ', 1='x', 2='o'
+    // change name gameBoard to state?
     const gameBoard = ['', 'x', 'o', '', 'x', '', '', 'o', ''];
     return { gameBoard };
 }) 
@@ -12,5 +13,8 @@ const renderGameboard = () => {
         gameGridElement.innerHTML += gameItemElement;
     })
 }
+
+// get each of the buttons querySelectorAll
+// 
 
 renderGameboard();

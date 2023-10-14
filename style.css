@@ -18,6 +18,11 @@ body {
   font-family: 'Gabarito', sans-serif;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 .wrapper {
   height: 100vh;
   display: grid;
