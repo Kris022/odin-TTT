@@ -32,6 +32,7 @@ header {
     font-size: 3rem;
     font-weight: bolder;
     letter-spacing: 2px;
+    color: var(--dark-red);
 }
 
 .scoreboard {
@@ -40,4 +41,40 @@ header {
     align-items: center;
     gap: 100px;
     font-size: 1.5rem;
+}
+
+main {
+    width: 90%;
+    /* border: 1px solid var(--red); */
+    margin-inline: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-grid {
+    /* border: 1px solid var(--green); */
+    width: 500px;
+    height: 400px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.game-grid button {
+    background-color: var(--text-secondary);
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.game-grid button:hover {
+    border: 2px solid black;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
