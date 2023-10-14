@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600&display=swap");
+
+:root {
+  --red: #c7493a;
+  --dark-red: #a43425;
+  --green: #689775;
+  --light-red: #907163;
+  --lighter-red: #379682;
+  --bg: #161616;
+  --text-secondary: #979797;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--text-secondary);
+  font-family: 'Gabarito', sans-serif;
+}
+
+.wrapper {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr 1fr 5fr 0.5fr;
+  box-sizing: border-box;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    font-weight: bolder;
+    letter-spacing: 2px;
+}
+
+.scoreboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+    font-size: 1.5rem;
+}
