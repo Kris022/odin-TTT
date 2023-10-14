@@ -67,6 +67,7 @@ main {
     background-color: var(--text-secondary);
     border: 1px solid transparent;
     cursor: pointer;
+    font-size: 4rem;
 }
 
 .game-grid button:hover {
