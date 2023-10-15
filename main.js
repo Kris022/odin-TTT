@@ -1,13 +1,19 @@
-const gameboard = (function () {
-  // 0=' ', 1='x', 2='o'
-  // change name gameBoard to state?
+function createPlayer(marker) {
+  const player = {};
 
+  player.marker = marker;
+
+  return player;
+}
+
+// Manages the game board state
+const gameboard = (function () {
   // Private memebers
-  const gameboardElement = document.querySelector(".game-grid");
+  const gameGridElement = document.querySelector(".game-grid");
   const gameboardState = ["", "x", "o", "", "x", "", "", "o", ""];
 
   function resetGameboard() {
-    gameboardElement.innerHTML = "";
+    gameGridElement.innerHTML = "";
   }
 
   // Public members
@@ -19,15 +25,29 @@ const gameboard = (function () {
         gameGridElement.innerHTML += gameItemElement;
       });
     },
+
+    isMoveValid: function(index) {
+        return gameboardState[index] === '';
+    },
+
+    placeMarker: function (marker, index) {
+      // check if index not already occupied
+      gameboardState[index] = marker;
+    },
+
+    checkGameOver: function () {
+      return null;
+    },
+
+    getState: function () {
+      return gameboardState;
+    },
   };
 })();
 
-// get each of the buttons querySelectorAll
 //
-
-gameboard.renderGameboard();
-
-const gameState = (function () {
+const gameManager = (function () {
+  let gameOver = false;
   let turn = "x";
 
   return {
@@ -36,7 +56,38 @@ const gameState = (function () {
       turn = turn === "x" ? "o" : "x";
       return curTurn;
     },
+
+    makeMove: function (move) {
+
+    },
+
+    isGameOver: function () {
+      return gameOver;
+    },
   };
 })(); // add parentheiss to invoke it on creation
 
-console.log(gameState.getTurn());
+// Allows player interaction with the game
+const main = (function () {
+  // get all game grid buttons
+  const gridCells = document.querySelectorAll('.game-grid button');
+
+  gridCells.forEach((cell, index) => {
+    cell.addEventListener('click', () => console.log(index))
+  })
+
+  return {
+    playTurn: function () {
+      // Get player input
+      const playerInput = prompt("Enter your move: ");
+
+      // palce mareker on the board
+      gameboard.placeMarker(gameManager.getTurn(), playerInput);
+
+      // render the board
+      gameboard.renderGameboard();
+    },
+  };
+})();
+
+// main.playTurn();
