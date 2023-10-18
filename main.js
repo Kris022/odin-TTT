@@ -6,88 +6,73 @@ function createPlayer(marker) {
   return player;
 }
 
-// Manages the game board state
+// Module to manage game board state
 const gameboard = (function () {
-  // Private memebers
-  const gameGridElement = document.querySelector(".game-grid");
+  // Priv members
+
+  // game buttons
+  const gameButtons = document.querySelectorAll(".game-grid button");
   const gameboardState = ["", "x", "o", "", "x", "", "", "o", ""];
 
   function resetGameboard() {
-    gameGridElement.innerHTML = "";
+    gameButtons.forEach((button) => {
+      button.innerHTML = "";
+    });
   }
 
-  // Public members
+  function renderGameboard() {
+    // gameButtons.forEach((button, index) => {
+    //   button.innerHTML = gameboardState[index];
+    // })
+
+    for (let i = 0; i < gameButtons.length; i++) {
+      gameButtons[i].innerHTML = gameboardState[i];
+    }
+  }
+
+  function placeMarker(marker, index) {
+    gameboardState[index] = marker;
+  }
+
   return {
-    renderGameboard: function () {
-      resetGameboard();
-      gameboardState.forEach((item) => {
-        const gameItemElement = `<button>${item}</button>`;
-        gameGridElement.innerHTML += gameItemElement;
-      });
-    },
-
-    isMoveValid: function(index) {
-        return gameboardState[index] === '';
-    },
-
-    placeMarker: function (marker, index) {
-      // check if index not already occupied
-      gameboardState[index] = marker;
-    },
-
-    checkGameOver: function () {
-      return null;
-    },
-
-    getState: function () {
-      return gameboardState;
-    },
+    gameButtons,
+    placeMarker,
+    renderGameboard,
   };
 })();
 
-//
-const gameManager = (function () {
-  let gameOver = false;
-  let turn = "x";
+const game = (function () {
+  const playerOne = createPlayer("x");
+  const playerTwo = createPlayer("o");
+
+  let currentPlayer = playerOne;
+
+  function playTurn(btnIndex) {
+
+    // Get current player
+    currentPlayer =
+      currentPlayer.marker === playerOne.marker ? playerTwo : playerOne;
+
+    // Place marker
+    gameboard.placeMarker(currentPlayer.marker, btnIndex);
+
+    // Render gameboard
+    gameboard.renderGameboard();
+    
+    // Check win
+
+    // Score
+  }
+
+  function init() {
+    gameboard.gameButtons.forEach((button, index) => {
+      button.addEventListener("click", () => playTurn(index));
+    });
+  }
 
   return {
-    getTurn: function () {
-      const curTurn = turn;
-      turn = turn === "x" ? "o" : "x";
-      return curTurn;
-    },
-
-    makeMove: function (move) {
-
-    },
-
-    isGameOver: function () {
-      return gameOver;
-    },
-  };
-})(); // add parentheiss to invoke it on creation
-
-// Allows player interaction with the game
-const main = (function () {
-  // get all game grid buttons
-  const gridCells = document.querySelectorAll('.game-grid button');
-
-  gridCells.forEach((cell, index) => {
-    cell.addEventListener('click', () => console.log(index))
-  })
-
-  return {
-    playTurn: function () {
-      // Get player input
-      const playerInput = prompt("Enter your move: ");
-
-      // palce mareker on the board
-      gameboard.placeMarker(gameManager.getTurn(), playerInput);
-
-      // render the board
-      gameboard.renderGameboard();
-    },
+    init,
   };
 })();
 
-// main.playTurn();
+game.init();
