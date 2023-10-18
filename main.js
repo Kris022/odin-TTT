@@ -9,9 +9,8 @@ function createPlayer(marker) {
 // Module to manage game board state
 const gameboard = (function () {
   // Private members
-
+  let gameboardState = ["", "x", "o", "", "x", "", "", "o", ""];
   const gameButtons = document.querySelectorAll(".game-grid button"); // change to gameboardSquares?
-  const gameboardState = ["", "x", "o", "", "x", "", "", "o", ""];
   const winCombinations = [
     [0, 1, 2],
     [3, 4, 5],
@@ -25,15 +24,17 @@ const gameboard = (function () {
 
   // Public Members
   function resetGameboard() {
-    gameButtons.forEach((button) => {
-      button.innerHTML = "";
-    });
+    gameboardState = new Array(9).fill('');
   }
 
   function renderGameboard() {
     gameButtons.forEach((button, index) => {
       button.innerHTML = gameboardState[index];
     });
+  }
+
+  function isValidMove(index) {
+    return gameboardState[index] === "";
   }
 
   function placeMarker(marker, index) {
@@ -56,10 +57,18 @@ const gameboard = (function () {
     return null;
   }
 
+  function checkTie() {
+    // check if all game square occupied
+    // if so return tie
+  }
+
   return {
     gameButtons,
     placeMarker,
     renderGameboard,
+    checkWinner,
+    isValidMove,
+    resetGameboard,
   };
 })();
 
@@ -71,24 +80,27 @@ const game = (function () {
   let currentPlayer = playerOne;
 
   function playTurn(btnIndex) {
-    // Get current player
-    currentPlayer =
-      currentPlayer.marker === playerOne.marker ? playerTwo : playerOne;
+    if (gameboard.isValidMove(btnIndex)) {
+      // Get current player
+      currentPlayer =
+        currentPlayer.marker === playerOne.marker ? playerTwo : playerOne;
 
-    // Place marker
-    gameboard.placeMarker(currentPlayer.marker, btnIndex);
+      // Place marker
+      gameboard.placeMarker(currentPlayer.marker, btnIndex);
 
-    // Render gameboard
-    gameboard.renderGameboard();
+      // Render gameboard
+      gameboard.renderGameboard();
 
-    // Check win
-
-    // Update and Render Score
+      // Check win
+      console.log(gameboard.checkWinner());
+      // Update and Render Score
+    }
   }
 
   // Public Members
   return {
     init: function () {
+      gameboard.resetGameboard();
       gameboard.renderGameboard();
 
       gameboard.gameButtons.forEach((button, index) => {
