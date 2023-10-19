@@ -24,7 +24,7 @@ const gameboard = (function () {
 
   // Public Members
   function resetGameboard() {
-    gameboardState = new Array(9).fill('');
+    gameboardState = new Array(9).fill("");
   }
 
   function renderGameboard() {
@@ -106,6 +106,24 @@ const game = (function () {
       gameboard.gameButtons.forEach((button, index) => {
         button.addEventListener("click", () => playTurn(index));
       });
+    },
+  };
+})();
+
+// Modal handler
+const modalController = (function () {
+  const modal = document.querySelector(".modal");
+  const button = document.querySelector(".modal-content button");
+  
+  button.addEventListener('click', () => closeModal());
+
+  function closeModal() {
+    modal.style.display = "none";
+  }
+
+  return {
+    openModal: function () {
+      modal.style.display = "block";
     },
   };
 })();

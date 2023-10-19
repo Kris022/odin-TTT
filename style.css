@@ -56,7 +56,7 @@ main {
     justify-content: center;
     align-items: center;
 }
-
+    
 .game-grid {
     /* border: 1px solid var(--green); */
     width: 500px;
@@ -83,4 +83,48 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* --------- Modal Styles --------- */
+.modal {
+    display: block;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    padding-top: 15%;
+}
+
+.modal-content {
+    width: 640px;
+    text-align: center;
+    background-color: white;
+    color: #161616;
+    display: grid;
+    grid-template-rows: 1fr 1.25fr 1fr;
+    margin: auto;
+    border-radius: 12px;
+    padding-bottom: 20px;
+}
+
+.modal-content button {
+    width: 55%;
+    border-radius: 10px;
+    background-color: var(--red);
+    font-size: 1.5rem;
+    font-weight: 600;
+    height: 100%;
+    margin-inline: auto;
+    cursor: pointer;
+    color: white;
+    border: none;
+    transition: 0.2s;
+}
+
+.modal-content button:hover {
+    transform: scale(1.1);
 }
