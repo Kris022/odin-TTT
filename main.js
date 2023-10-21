@@ -2,6 +2,7 @@ function createPlayer(marker) {
   const player = {};
 
   player.marker = marker;
+  player.score = 0;
 
   return player;
 }
@@ -59,7 +60,8 @@ const gameboard = (function () {
 
   function checkTie() {
     // check if all game square occupied
-    // if so return tie
+    // if so it's a tie return true
+    return !gameboardState.includes("");
   }
 
   return {
@@ -69,6 +71,7 @@ const gameboard = (function () {
     checkWinner,
     isValidMove,
     resetGameboard,
+    checkTie,
   };
 })();
 
@@ -92,7 +95,13 @@ const game = (function () {
       gameboard.renderGameboard();
 
       // Check win
-      console.log(gameboard.checkWinner());
+      if (gameboard.checkWinner()) {
+        modalController.openModal();
+      }
+
+      if (gameboard.checkTie()) {
+        console.log("tie");
+      }
       // Update and Render Score
     }
   }
@@ -107,6 +116,11 @@ const game = (function () {
         button.addEventListener("click", () => playTurn(index));
       });
     },
+
+    resetGame: function () {
+      gameboard.resetGameboard();
+      gameboard.renderGameboard();
+    },
   };
 })();
 
@@ -114,8 +128,24 @@ const game = (function () {
 const modalController = (function () {
   const modal = document.querySelector(".modal");
   const button = document.querySelector(".modal-content button");
-  
-  button.addEventListener('click', () => closeModal());
+
+  button.addEventListener("click", () => handleClick());
+
+  function displayGameOver(gameState) {
+    // display
+    // It's a tie... Well done both of you!
+    // 🎉 Congratulations! 🥳
+    // Player X: You Win
+    switch (gameState) {
+      case "":
+        winMessage = "P";
+    }
+  }
+
+  function handleClick() {
+    game.resetGame();
+    closeModal();
+  }
 
   function closeModal() {
     modal.style.display = "none";
