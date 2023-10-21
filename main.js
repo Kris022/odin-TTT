@@ -95,6 +95,12 @@ const game = (function () {
       gameboard.renderGameboard();
 
       // Check win
+      checkGameOver();
+
+      // Update and Render Score
+    }
+
+    function checkGameOver() {
       if (gameboard.checkWinner()) {
         const heading = "🎉 Congratulations! 🥳";
         const subheading = `Player ${currentPlayer.marker} You Win!`;
@@ -106,7 +112,6 @@ const game = (function () {
         const subheading = `Well done both of you! 😄`;
         modalController.displayGameOver(heading, subheading);
       }
-      // Update and Render Score
     }
   }
 
