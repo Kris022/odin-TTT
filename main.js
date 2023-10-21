@@ -96,11 +96,15 @@ const game = (function () {
 
       // Check win
       if (gameboard.checkWinner()) {
-        modalController.openModal();
+        const heading = "🎉 Congratulations! 🥳";
+        const subheading = `Player ${currentPlayer.marker} You Win!`;
+        modalController.displayGameOver(heading, subheading);
       }
 
       if (gameboard.checkTie()) {
-        console.log("tie");
+        const heading = "😔 It's a tie... 👔";
+        const subheading = `Well done both of you! 😄`;
+        modalController.displayGameOver(heading, subheading);
       }
       // Update and Render Score
     }
@@ -127,19 +131,25 @@ const game = (function () {
 // Modal handler
 const modalController = (function () {
   const modal = document.querySelector(".modal");
+  const modalHeading = document.querySelector(".modal-content h1");
+  const modalMessage = document.querySelector(".modal-content h2");
+
   const button = document.querySelector(".modal-content button");
 
   button.addEventListener("click", () => handleClick());
 
-  function displayGameOver(gameState) {
-    // display
-    // It's a tie... Well done both of you!
-    // 🎉 Congratulations! 🥳
-    // Player X: You Win
-    switch (gameState) {
-      case "":
-        winMessage = "P";
-    }
+  function displayGameOver(title, message) {
+    modalHeading.innerHTML = title;
+    modalMessage.innerHTML = message;
+    openModal();
+  }
+
+  function openModal() {
+    modal.style.display = "block";
+  }
+
+  function closeModal() {
+    modal.style.display = "none";
   }
 
   function handleClick() {
@@ -147,14 +157,8 @@ const modalController = (function () {
     closeModal();
   }
 
-  function closeModal() {
-    modal.style.display = "none";
-  }
-
   return {
-    openModal: function () {
-      modal.style.display = "block";
-    },
+    displayGameOver,
   };
 })();
 
