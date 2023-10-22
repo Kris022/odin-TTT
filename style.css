@@ -48,6 +48,11 @@ header {
     font-size: 1.5rem;
 }
 
+.scoreboard .active-player {
+    color: var(--green);
+    text-decoration: underline;
+}
+
 main {
     width: 90%;
     /* border: 1px solid var(--red); */

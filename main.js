@@ -98,16 +98,20 @@ const game = (function () {
       checkGameOver();
 
       // Update and Render Score
+      scoreDisplay.renderCurrentPlayer(currentPlayer.marker);
     }
 
     function checkGameOver() {
       if (gameboard.checkWinner()) {
         const heading = "🎉 Congratulations! 🥳";
         const subheading = `Player ${currentPlayer.marker} You Win!`;
-        modalController.displayGameOver(heading, subheading);
-      }
 
-      if (gameboard.checkTie()) {
+        // Update and Render Score
+        scoreDisplay.updateScore(currentPlayer.marker);
+        scoreDisplay.renderScore();
+
+        modalController.displayGameOver(heading, subheading);
+      } else if (gameboard.checkTie()) {
         const heading = "😔 It's a tie... 👔";
         const subheading = `Well done both of you! 😄`;
         modalController.displayGameOver(heading, subheading);
@@ -118,8 +122,7 @@ const game = (function () {
   // Public Members
   return {
     init: function () {
-      gameboard.resetGameboard();
-      gameboard.renderGameboard();
+      this.resetGame();
 
       gameboard.gameButtons.forEach((button, index) => {
         button.addEventListener("click", () => playTurn(index));
@@ -129,6 +132,8 @@ const game = (function () {
     resetGame: function () {
       gameboard.resetGameboard();
       gameboard.renderGameboard();
+      scoreDisplay.renderScore();
+      scoreDisplay.renderCurrentPlayer(currentPlayer.marker);
     },
   };
 })();
@@ -164,6 +169,49 @@ const modalController = (function () {
 
   return {
     displayGameOver,
+  };
+})();
+
+const scoreDisplay = (function () {
+  let scoreX = 0;
+  let scoreO = 0;
+
+  // const scoreboard = document.querySelector(".scoreboard");
+  const scoreboardX = document.querySelector(".playerX");
+  const scoreboardO = document.querySelector(".playerO");
+
+  return {
+    renderScore: function () {
+      scoreboardX.innerHTML = `X: ${scoreX}`;
+      scoreboardO.innerHTML = `O: ${scoreO}`;
+      // scoreboard.innerHTML = `<h2>X: ${scoreX}</h2>
+      //                         <h2>O: ${scoreO}</h2>
+      // `;
+    },
+
+    renderCurrentPlayer: function (marker) {
+      switch (marker) {
+        case "o":
+          scoreboardX.classList.add("active-player");
+          scoreboardO.classList.remove("active-player");
+          break;
+        case "x":
+          scoreboardO.classList.add("active-player");
+          scoreboardX.classList.remove("active-player");
+          break;
+      }
+    },
+
+    updateScore: function (marker) {
+      switch (marker) {
+        case "x":
+          scoreX++;
+          break;
+        case "o":
+          scoreO++;
+          break;
+      }
+    },
   };
 })();
 
